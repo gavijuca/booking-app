@@ -48,11 +48,6 @@ public class App {
                     .build()
             )
             .addHandler(new RequestLoggingHandler())
-            /*.addHandler(Method.GET, "/current-time", (request, response, pathParams) -> {
-                response.status(200);
-                response.contentType(ContentTypes.TEXT_PLAIN);
-                response.write(Instant.now().toString());
-            })*/
             .addHandler(RestHandlerBuilder.restHandler(new BookingResource())
                 .addRequestFilter(new BasicAuthSecurityFilter("my-bank", authenticator, authorizer))
                 .addCustomWriter(new JacksonJaxbJsonProvider())
@@ -60,10 +55,6 @@ public class App {
             )
             //.addHandler(Method.GET, "/api/booking", App::getBooking)
             //.addHandler(Method.POST, "/api/booking", App::postBooking)
-            .addHandler(ResourceHandlerBuilder.fileOrClasspath("src/main/resources/web", "/web")
-                .withPathToServeFrom("/")
-                .withDefaultFile("index.html")
-                .build())
             .start();
 
         log.info("Server started at " + server.httpUri() + " and " + server.httpsUri());
